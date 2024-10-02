@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth.js');
 const faultRoutes = require('./routes/fault.js');
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 //importing Sequelize instance 
 const sequelize = require('./config/database'); 
