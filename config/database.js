@@ -6,7 +6,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 let sequelize;
 
 if (isProduction) {
-  const connectionString = 'postgres://admin:password@dpg-crui0rtumphs73enpdfg-a:5432/fault_reporting_system';
+  const connectionString = 'postgresql://admin:oHsYynL1bUd1yFRPFUXn8uQpDYT2aLtu@dpg-crui0rtumphs73enpdfg-a/fault_reporting_system';
 
   // Ensure the connection string is not null or undefined
   if (!connectionString) {
