@@ -4,5 +4,5 @@
 
 
 # Ignore sensitive config files
-config/database.js
+# config/database.js
 seeders/adminSeeders.js
