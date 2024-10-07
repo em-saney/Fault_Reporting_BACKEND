@@ -1,4 +1,8 @@
-# node_modules/
-# package.json
-# package-lock.json
 .env
+
+# Ignore logs
+
+
+# Ignore sensitive config files
+config/database.js
+seeders/adminSeeders.js

@@ -12,7 +12,16 @@ const User = require('./models/User.js'); // Import your User model
 const Fault = require('./models/Fault.js'); // Import your Fault model
 
 const app = express();
-app.use(cors());
+
+// Define CORS options
+const corsOptions = {
+  origin: 'http://127.0.0.1:5501', // Allow requests only from this origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+};
+
+// Use CORS middleware with options
+app.use(cors(corsOptions));
 
 // Middleware for parsing JSON
 app.use(express.json()); // Use express built-in JSON parser
