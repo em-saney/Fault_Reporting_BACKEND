@@ -1,34 +1,21 @@
 const { Sequelize } = require('sequelize');
 
-//determing the connection mode PRODUCTION OR DEVELOPMENT
-const isProduction = process.env.NODE_ENV === 'production';
+const connectionString = process.env.DATABASE_URL || 'postgresql://fault_reporting_db_user:ZmncyxcP5RPHES759KUkcb8KWuRPTbbN@dpg-cs1tm9m8ii6s73d81ugg-a.oregon-postgres.render.com/fault_reporting_db';
 
-let sequelize;
-
-if (isProduction) {
-  const connectionString = 'postgresql://admin:oHsYynL1bUd1yFRPFUXn8uQpDYT2aLtu@dpg-crui0rtumphs73enpdfg-a/fault_reporting_system';
-
-  // making sure of the connection string
-  if (!connectionString) {
-    throw new Error('Connection string is not defined.');
-  }
-
-  sequelize = new Sequelize(connectionString, {
-    dialect: 'postgres',
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
-    },
-  });
-} else {
-  // connecting database locally
-  sequelize = new Sequelize('faultReportingSystem', 'admin', 'admin123', {
-    host: 'localhost',
-    dialect: 'postgres',
-    logging: false,
-  });
+// Making sure the connection string exists
+if (!connectionString) {
+  throw new Error('Connection string is not defined.');
 }
+
+// Use the external connection string for both local and production
+const sequelize = new Sequelize(connectionString, {
+  dialect: 'postgres',
+  dialectOptions: {
+    ssl: {
+      require: true, // Render databases often require SSL
+      rejectUnauthorized: false, // Allow self-signed certificates
+    },
+  },
+});
 
 module.exports = sequelize;
