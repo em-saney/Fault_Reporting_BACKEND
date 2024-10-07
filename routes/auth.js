@@ -1,16 +1,20 @@
 const express = require('express');
-const router = express.Router();
-
-// importing validation middleware
+const router = express.Router(); // Initialize the router
+// Importing validation middleware
 const { validateRegistrationInput, handleValidationErrors } = require('../middleware/validateInput.js');
 
-//importing all the required controllers
-const { registerUser, loginUser, resetPassword, logoutUser } = require('../controllers/authController.js');
+// Importing all the required controllers
+const {
+  registerUser,
+  loginUser,
+  resetPassword,
+  logoutUser,
+} = require('../controllers/authController.js');
 
-//defining routes
+// Defining routes
 router.post('/register', validateRegistrationInput, handleValidationErrors, registerUser);
-router.post('/login', loginUser);
-router.post('/reset-password', resetPassword);
+router.post('/login', loginUser); // Consider adding validation if needed
+router.post('/reset-password', resetPassword); // Consider adding validation if needed
 router.post('/logout', logoutUser);
 
 module.exports = router;

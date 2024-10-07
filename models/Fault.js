@@ -1,14 +1,13 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database.js'); 
-const User = require('./User.js');
+const sequelize = require('../config/database');
 
 const Fault = sequelize.define('Fault', {
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: User, 
-      key: 'id',  
+      model: 'User', // Reference the User model
+      key: 'id',
     },
   },
   natureOfFault: {
@@ -31,17 +30,18 @@ const Fault = sequelize.define('Fault', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'unreplied',
+  },
+  feedback: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  }
 }, {
-  timestamps: true, 
+  tableName: 'Fault', // Specify the table name
+  timestamps: true,
 });
-
-// syncing fault model with the database
-Fault.sync()
-  // .then(() => {
-  //   console.log('Fault table created successfully');
-  // })
-  // .catch((error) => {
-  //   console.error('Error creating Fault table:', error);
-  // });
 
 module.exports = Fault;

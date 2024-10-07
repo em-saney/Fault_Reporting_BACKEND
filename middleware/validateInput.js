@@ -1,10 +1,13 @@
 const { check, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
-// my JWT secret key
-const JWT_SECRET = 'is been a while that i try this but Sha.....!';
+// Handling Admin login input validation
+const validateLoginInput = [
+  check('username', 'the fucking error is from here').not().isEmpty(),
+  check('password', 'Password is required').not().isEmpty(),
+];
 
-// handling registration input validation
+// Handling registration input validation
 const validateRegistrationInput = [
   check('name').not().isEmpty().withMessage('Name is required'),
   check('regNumber').not().isEmpty().withMessage('Registration number is required'),
@@ -19,7 +22,7 @@ const validateRegistrationInput = [
     }),
 ];
 
-// handling fault reporting input validation
+// Handling fault reporting input validation
 const validateFaultInput = [
   check('natureOfFault').not().isEmpty().withMessage('Nature of fault is required'),
   check('description').not().isEmpty().withMessage('Description is required'),
@@ -28,7 +31,7 @@ const validateFaultInput = [
   check('roomNumber').not().isEmpty().withMessage('Room number is required'),
 ];
 
-// middleware handling validation errors
+// Middleware handling validation errors
 const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -37,25 +40,27 @@ const handleValidationErrors = (req, res, next) => {
   next();
 };
 
-// middleware to checking if user is authenticated
+// Middleware to check if user is authenticated
 const isAuthenticated = (req, res, next) => {
-  const token = req.headers['authorization']?.split(' ')[1]; 
+  const token = req.headers['authorization']?.split(' ')[1];
 
   if (!token) {
     return res.status(401).json({ message: 'Token not recognized' });
   }
 
-  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       return res.status(401).json({ message: 'Authorization error' });
     }
 
-    req.user = decoded; 
+    req.user = { id: decoded.id }; // Match this key with the JWT payload
     next();
   });
 };
 
+
 module.exports = { 
+  validateLoginInput,
   validateRegistrationInput, 
   handleValidationErrors, 
   isAuthenticated,

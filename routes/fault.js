@@ -4,10 +4,11 @@ const { validateFaultInput, handleValidationErrors, isAuthenticated } = require(
 
 const router = express.Router();
 
-// reporting fault route
+// Reporting fault route
 router.post('/report', isAuthenticated, validateFaultInput, handleValidationErrors, reportFault);
 
-//grtting fault history route
+// Getting fault history route
 router.get('/history', isAuthenticated, getFaultHistory);
 
 module.exports = router;
+ 

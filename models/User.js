@@ -1,16 +1,15 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database.js');
+const sequelize = require('../config/database');
 
-//defining User model
 const User = sequelize.define('User', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  regNumber: {
+  regNumber: {  // Ensure this is regNumber
     type: DataTypes.STRING,
-    unique: true,
     allowNull: false,
+    unique: true,
   },
   phoneNumber: {
     type: DataTypes.STRING,
@@ -19,18 +18,10 @@ const User = sequelize.define('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
+  }
 }, {
+  tableName: 'User', // Specify the table name
   timestamps: true,
 });
-
-// syncing user model with the database
-User.sync()
-  // .then(() => {
-  //   console.log('User table created successfully');
-  // })
-  // .catch((error) => {
-  //   console.error('Error creating User table:', error);
-  // });
 
 module.exports = User;

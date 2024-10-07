@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 
-// Determine if running in production or development
+//determing the connection mode PRODUCTION OR DEVELOPMENT
 const isProduction = process.env.NODE_ENV === 'production';
 
 let sequelize;
@@ -8,7 +8,7 @@ let sequelize;
 if (isProduction) {
   const connectionString = 'postgresql://admin:oHsYynL1bUd1yFRPFUXn8uQpDYT2aLtu@dpg-crui0rtumphs73enpdfg-a/fault_reporting_system';
 
-  // Ensure the connection string is not null or undefined
+  // making sure of the connection string
   if (!connectionString) {
     throw new Error('Connection string is not defined.');
   }
@@ -23,7 +23,7 @@ if (isProduction) {
     },
   });
 } else {
-  // Local database connection
+  // connecting database locally
   sequelize = new Sequelize('faultReportingSystem', 'admin', 'admin123', {
     host: 'localhost',
     dialect: 'postgres',
