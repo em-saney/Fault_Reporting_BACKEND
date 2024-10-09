@@ -5,7 +5,6 @@ const reportFault = async (req, res) => {
   const { natureOfFault, description, hostel, hostelBlock, roomNumber } = req.body;
 
   try {
-    // Extract userId from the authenticated user (req.user should be populated by middleware)
     const userId = req.user.id;
 
     // Validate userId
@@ -33,7 +32,6 @@ const reportFault = async (req, res) => {
 // Getting Fault History
 const getFaultHistory = async (req, res) => {
   try {
-    // Extract userId from the authenticated user (req.user should be populated by middleware)
     const userId = req.user.id;
 
     // Validate userId

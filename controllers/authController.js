@@ -4,7 +4,7 @@ const User = require('../models/User.js');
 
 // Handling student registration
 const registerUser = async (req, res) => {
-  const { name, regNumber, phoneNumber, password, confirmPassword } = req.body; // Use regNumber here
+  const { name, regNumber, phoneNumber, password, confirmPassword } = req.body;
 
   // Checking if passwords match
   if (password !== confirmPassword) {
@@ -13,7 +13,7 @@ const registerUser = async (req, res) => {
 
   try {
     // Checking if the regNumber already exists in the database
-    const existingUser = await User.findOne({ where: { regNumber } }); // Use regNumber instead of registrationNumber
+    const existingUser = await User.findOne({ where: { regNumber } });
     if (existingUser) {
       return res.status(400).json({ message: 'Registration number already exists' });
     }
@@ -25,7 +25,7 @@ const registerUser = async (req, res) => {
     // Creating new user in PostgreSQL
     const newUser = await User.create({
       name,
-      regNumber, // Use regNumber here
+      regNumber, 
       phoneNumber,
       password: hashedPassword,
     });
@@ -39,11 +39,11 @@ const registerUser = async (req, res) => {
 
 // Handling student login
 const loginUser = async (req, res) => {
-  const { regNumber, password } = req.body; // Use regNumber here
+  const { regNumber, password } = req.body;
 
   try {
     // Checking if the student registration number exists
-    const user = await User.findOne({ where: { regNumber } }); // Use regNumber here
+    const user = await User.findOne({ where: { regNumber } });
     if (!user) {
       return res.status(400).json({ message: 'Registration number not found' });
     }
@@ -56,7 +56,7 @@ const loginUser = async (req, res) => {
 
     // Generating JWT token with 'id' instead of 'userId'
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: '1h', // or whatever expiration you want
+      expiresIn: '1h',
     });
 
     // Sending back the token
@@ -98,7 +98,7 @@ const resetPassword = async (req, res) => {
   }
 };
 
-// Logout user (optional; JWT usually handles this on the client side)
+// Logout user 
 const logoutUser = (req, res) => {
   res.status(200).json({ message: 'Logged out successfully' });
 };

@@ -33,15 +33,23 @@ const Fault = sequelize.define('Fault', {
   status: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: 'unreplied',
+    defaultValue: 'unreplied', // Default status for new faults
   },
   feedback: {
     type: DataTypes.TEXT,
-    allowNull: true,
+    allowNull: true, // Feedback can be optional
   }
 }, {
   tableName: 'Fault', // Specify the table name
-  timestamps: true,
+  timestamps: true, // Automatically manage createdAt and updatedAt fields
 });
+
+// // Define associations if needed
+// Fault.associate = (models) => {
+//   Fault.belongsTo(models.User, {
+//     foreignKey: 'userId', // Foreign key in the Fault table
+//     as: 'user', // Alias for the association
+//   });
+// };
 
 module.exports = Fault;

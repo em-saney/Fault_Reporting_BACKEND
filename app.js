@@ -1,23 +1,23 @@
 const express = require('express');
 const cors = require('cors');
-const authRoutes = require('./routes/auth.js'); // User authentication routes
-const adminAuthRoutes = require('./routes/adminAuth.js'); // Admin authentication routes
-const faultRoutes = require('./routes/fault.js'); // Fault reporting routes
+const authRoutes = require('./routes/auth.js'); 
+const adminAuthRoutes = require('./routes/adminAuth.js'); 
+const faultRoutes = require('./routes/fault.js'); 
 
 const PORT = process.env.PORT || 3000;
 require('dotenv').config();
 const sequelize = require('./config/database.js');
-const Admin = require('./models/Admin.js'); // Import your Admin model
-const User = require('./models/User.js'); // Import your User model
-const Fault = require('./models/Fault.js'); // Import your Fault model
+const Admin = require('./models/Admin.js'); 
+const User = require('./models/User.js'); 
+const Fault = require('./models/Fault.js'); 
 
 const app = express();
 
-// Use CORS middleware with options
-app.use(cors);
+// Use CORS middleware 
+app.use(cors('*'));
 
 // Middleware for parsing JSON
-app.use(express.json()); // Use express built-in JSON parser
+app.use(express.json()); 
 
 // Use routes
 app.use('/api/auth', authRoutes); 
