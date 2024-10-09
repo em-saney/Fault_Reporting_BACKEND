@@ -64,9 +64,9 @@ exports.replyToReport = async (req, res) => {
 
   try {
     // Update the feedback and status of the report
-    const [updated] = await Fault.updateOne(
+    const [updated] = await Fault.update(
       { feedback, status: 'replied' },
-      { where: { id: reportId } }
+      { where: { id: reportId } } // Use the converted ID
     );
 
     if (updated) {
