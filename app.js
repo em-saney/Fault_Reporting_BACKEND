@@ -14,7 +14,7 @@ const Fault = require('./models/Fault.js');
 const app = express();
 
 // Use CORS middleware 
-app.use(cors('*'));
+app.use(cors({origin: '*'}));
 
 // Middleware for parsing JSON
 app.use(express.json()); 
