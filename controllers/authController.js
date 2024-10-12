@@ -56,7 +56,7 @@ const loginUser = async (req, res) => {
 
     // Generating JWT token with 'id' instead of 'userId'
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: '1h',
+      expiresIn: '24h',
     });
 
     // Sending back the token
