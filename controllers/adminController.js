@@ -95,3 +95,51 @@ exports.getReportStatus = async (req, res) => {
     res.status(500).json({ message: 'Internal server error.' });
   }
 };
+
+// Get all reports, or filter by status if query param is provided
+exports.getReports = async (req, res) => {
+  const { status } = req.query;  // Query parameter for filtering
+  
+  try {
+    let reports;
+    if (status) {
+      // Filter reports based on the status (e.g., unreplied, replied)
+      reports = await Fault.findAll({ where: { status } });
+    } else {
+      // Fetch all reports if no status filter is applied
+      reports = await Fault.findAll();
+    }
+    res.json(reports);
+  } catch (error) {
+    console.error('Error fetching reports:', error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+};
+
+// Get report counts by status
+exports.getReportCounts = async (req, res) => {
+  try {
+    const totalReports = await Fault.count(); // Count total reports
+    const unreadReports = await Fault.count({ where: { status: 'unreplied' } }); // Count unread reports
+    const repliedReports = await Fault.count({ where: { status: 'replied' } }); // Count replied reports
+
+    res.status(200).json({
+      totalReports,
+      unreadReports,
+      repliedReports,
+    });
+  } catch (error) {
+    console.error('Error counting reports:', error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+};
+
+// Admin logout and destroy session
+exports.logoutAdmin = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Failed to logout' });
+    }
+    res.status(200).json({ message: 'Logout successful' }); // Redirect or send message
+  });
+};
