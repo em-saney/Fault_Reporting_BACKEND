@@ -3,18 +3,25 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth.js'); 
 const adminAuthRoutes = require('./routes/adminAuth.js'); 
 const faultRoutes = require('./routes/fault.js'); 
-
-const PORT = process.env.PORT || 3000;
-require('dotenv').config();
-const sequelize = require('./config/database.js');
 const Admin = require('./models/Admin.js'); 
 const User = require('./models/User.js'); 
 const Fault = require('./models/Fault.js'); 
 
+const PORT = process.env.PORT || 8080;
+require('dotenv').config();
+const sequelize = require('./config/database.js');
+
+
 const app = express();
 
 // Use CORS middleware 
-app.use(cors({origin: '*'}));
+app.use(cors());
+
+// // Allow requests from the front-end origin
+// app.use(cors({
+//     origin: 'http://127.0.0.1:5501', // or use 'http://localhost:5501' if needed
+// }));
+
 
 // Middleware for parsing JSON
 app.use(express.json()); 
@@ -23,6 +30,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes); 
 app.use('/api/admin', adminAuthRoutes);
 app.use('/api/fault', faultRoutes); 
+app.use(express.static('./ELECTRIC_FAULT/')); // Adjust path as necessary
+
 
 app.get('/', (req, res) => {
   res.send('API is running...');
