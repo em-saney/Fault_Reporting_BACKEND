@@ -30,7 +30,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes); 
 app.use('/api/admin', adminAuthRoutes);
 app.use('/api/fault', faultRoutes); 
-app.use(express.static('./ELECTRIC_FAULT/')); // Adjust path as necessary
+// app.use(express.static('./ELECTRIC_FAULT/')); // Adjust path as necessary
 
 
 app.get('/', (req, res) => {
